@@ -1,7 +1,5 @@
-*.csv
-!data-simple.csv
 node_modules
 out
 *.code-workspace
 *.csv
-!data-simple.csv
+!sample-data.csv
