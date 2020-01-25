@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+  <meta charset="UTF-8">
+  <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
+  <!-- <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
+  <title>Graph Generator</title>
+
+  <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+  <!-- <script src="https://raw.githubusercontent.com/mholt/PapaParse/master/papaparse.min.js"></script> -->
+  <script src="resources/plotly-latest.min.js"></script>
+  <script src="resources/papaparse.min.js"></script>
+</head>
+
+
+
+
+<body>
+  <div id="myDiv">
+    <!-- Plotly chart will be drawn inside this DIV -->
+  </div>
+
+  <input type="file" id="files" name="files[]" accept=".csv" single />
+  <output id="list"></output>
+
+
+
+
+  <script>
+    function handleFileSelect(evt) {
+      var files = evt.target.files; // FileList object
+
+      processFile(files);
+    }
+
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+
+    function processFile(files) {
+      Papa.parse(files[0], {
+        dynamicTyping: true,
+        header: true,
+        complete: function (results) {
+          dataTable = results.data;
+
+          var temperatures = [[], [], [], [], [], [], [], [], [], []];
+          var timestamps = [[], [], [], [], [], [], [], [], [], []];
+
+          var i;
+          for (i = 0; i < dataTable.length - 4; i++) {
+            // temperatures[dataTable[i]["Probe #"] - 1].push(dataTable[i]["Sample (f)"]);
+            // timestamps[dataTable[i]["Probe #"] - 1].push(dataTable[i]["Timestamp"]);
+
+            // probes.push(dataTable[i]["Probe #"]);
+            probe_num = dataTable[i]["Probe #"];
+            switch (probe_num) {
+              case 1:
+                temperatures[0].push(dataTable[i]["Sample (f)"]);
+                timestamps[0].push(dataTable[i]["Timestamp"]);
+                break;
+              case 2:
+                temperatures[1].push(dataTable[i]["Sample (f)"]);
+                timestamps[1].push(dataTable[i]["Timestamp"]);
+                break;
+              case 3:
+                temperatures[2].push(dataTable[i]["Sample (f)"]);
+                timestamps[2].push(dataTable[i]["Timestamp"]);
+                break;
+              case 4:
+                temperatures[3].push(dataTable[i]["Sample (f)"]);
+                timestamps[3].push(dataTable[i]["Timestamp"]);
+                break;
+              case 5:
+                temperatures[4].push(dataTable[i]["Sample (f)"]);
+                timestamps[4].push(dataTable[i]["Timestamp"]);
+                break;
+              case 6:
+                temperatures[5].push(dataTable[i]["Sample (f)"]);
+                timestamps[5].push(dataTable[i]["Timestamp"]);
+                break;
+              case 7:
+                temperatures[6].push(dataTable[i]["Sample (f)"]);
+                timestamps[6].push(dataTable[i]["Timestamp"]);
+                break;
+              case 8:
+                temperatures[7].push(dataTable[i]["Sample (f)"]);
+                timestamps[7].push(dataTable[i]["Timestamp"]);
+                break;
+              case 9:
+                temperatures[8].push(dataTable[i]["Sample (f)"]);
+                timestamps[8].push(dataTable[i]["Timestamp"]);
+                break;
+              case 10:
+                temperatures[9].push(dataTable[i]["Sample (f)"]);
+                timestamps[9].push(dataTable[i]["Timestamp"]);
+                break;
+            }
+          }
+          console.log("Temperatures:", temperatures);
+          console.log("Timestamps:", timestamps);
+
+          plotData(temperatures, timestamps)
+        }
+      });
+    }
+
+    function plotData(temperatures, timestamps) {
+      var trace1 = [{
+        x: timestamps[0],
+        y: temperatures[0],
+        type: 'scatter',
+        name: 'Probe 1'
+      }];
+      var trace2 = [{
+        x: timestamps[1],
+        y: temperatures[1],
+        type: 'scatter',
+        name: 'Probe 2'
+      }];
+      var trace3 = [{
+        x: timestamps[2],
+        y: temperatures[2],
+        type: 'scatter',
+        name: 'Probe 3'
+      }];
+
+
+
+
+
+
+
+      // var trace1 = {
+      //   x: [1, 2, 3, 4],
+      //   y: [10, 15, 13, 17],
+      //   type: 'scatter'
+      // };
+
+      // var trace2 = {
+      //   x: [1, 2, 3, 4],
+      //   y: [16, 5, 11, 9],
+      //   type: 'scatter'
+      // };
+
+      // var data = trace1;
+      var data = [ trace1, trace2 ];
+
+      Plotly.newPlot('myDiv', data);
+
+
+
+      // var data = trace2; //[data1, data2];
+      // Plotly.newPlot('myDiv', data, { responsive: true });
+    }
+  </script>
+</body>
+
+
+
+
+</html>
