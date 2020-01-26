@@ -8,10 +8,10 @@
   <!-- <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
   <title>Graph Generator</title>
 
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="https://unpkg.com/papaparse@5.1.1/papaparse.min.js"></script>
-  <!-- <script src="resources/plotly-latest.min.js"></script> -->
-  <!-- <script src="resources/papaparse.min.js"></script> -->
+  <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+  <!-- <script src="https://unpkg.com/papaparse@5.1.1/papaparse.min.js"></script> -->
+  <script src="resources/plotly-latest.min.js"></script>
+  <script src="resources/papaparse.min.js"></script>
 </head>
 
 
@@ -96,10 +96,66 @@
                 break;
             }
           }
-          console.log("Temperatures:", temperatures);
-          console.log("Timestamps:", timestamps);
 
-          plotData(temperatures, timestamps)
+
+          for (i = 1; i < temperatures[0].length; i++) {
+            if (temperatures[0][i] < 0) {
+              temperatures[0][i] = temperatures[0][i - 1];
+            }
+          }
+          for (i = 1; i < temperatures[1].length; i++) {
+            if (temperatures[1][i] < 0) {
+              temperatures[1][i] = temperatures[1][i - 1];
+            }
+          }
+          for (i = 1; i < temperatures[2].length; i++) {
+            if (temperatures[2][i] < 0) {
+              temperatures[2][i] = temperatures[2][i - 1];
+            }
+          }
+          for (i = 1; i < temperatures[3].length; i++) {
+            if (temperatures[3][i] < 0) {
+              temperatures[3][i] = temperatures[3][i - 1];
+            }
+          }
+          for (i = 1; i < temperatures[4].length; i++) {
+            if (temperatures[4][i] < 0) {
+              temperatures[4][i] = temperatures[4][i - 1];
+            }
+          }
+          for (i = 1; i < temperatures[5].length; i++) {
+            if (temperatures[5][i] < 0) {
+              temperatures[5][i] = temperatures[5][i - 1];
+            }
+          }
+          for (i = 1; i < temperatures[6].length; i++) {
+            if (temperatures[6][i] < 0) {
+              temperatures[6][i] = temperatures[6][i - 1];
+            }
+          }
+          for (i = 1; i < temperatures[7].length; i++) {
+            if (temperatures[7][i] < 0) {
+              temperatures[7][i] = temperatures[7][i - 1];
+            }
+          }
+          for (i = 1; i < temperatures[8].length; i++) {
+            if (temperatures[8][i] < 0) {
+              temperatures[8][i] = temperatures[8][i - 1];
+            }
+          }
+          for (i = 1; i < temperatures[9].length; i++) {
+            if (temperatures[9][i] < 0) {
+              temperatures[9][i] = temperatures[9][i - 1];
+            }
+          }
+
+
+          // console.log("Temperatures:", temperatures);
+          // console.log("Timestamps:", timestamps);
+
+          graphName = dataTable[dataTable.length - 4]["Sample (f)"]
+
+          plotData(temperatures, timestamps, graphName)
         }
       });
     }
@@ -114,58 +170,98 @@
     }
 
 
-    function plotData(temperatures, timestamps) {
+    function plotData(temperatures, timestamps, graphName = "Temperature Plot") {
 
-      console.log("Length", temperatures[0].length);
+      // console.log("Length", temperatures[0].length);
 
-      var trace1 = [{
-        // x: timestamps[0],
-        x: makeArr(1, temperatures[0].length, temperatures[0].length),
+
+      var x_array = timestamps[0]; //makeArr(1, temperatures[0].length, temperatures[0].length)
+
+      var trace1 = {
+        x: x_array,
         y: temperatures[0],
         type: 'scatter',
         name: 'Probe 1'
-      }];
-      var trace2 = [{
-        // x: timestamps[1],
-        x: makeArr(1, temperatures[1].length, temperatures[1].length),
+      };
+
+      var trace2 = {
+        x: x_array,
         y: temperatures[1],
-        type: 'scatter',
+        type: 'scatter', 
         name: 'Probe 2'
-      }];
-      var trace3 = [{
-        x: timestamps[2],
+      };
+
+      var trace3 = {
+        x: x_array,
         y: temperatures[2],
-        type: 'scatter',
+        type: 'scatter', 
         name: 'Probe 3'
-      }];
+      };
 
+      var trace4 = {
+        x: x_array,
+        y: temperatures[3],
+        type: 'scatter', 
+        name: 'Probe 4'
+      };
 
+      var trace5 = {
+        x: x_array,
+        y: temperatures[4],
+        type: 'scatter', 
+        name: 'Probe 5'
+      };
 
+      var trace6 = {
+        x: x_array,
+        y: temperatures[5],
+        type: 'scatter', 
+        name: 'Probe 6'
+      };
 
+      var trace7 = {
+        x: x_array,
+        y: temperatures[6],
+        type: 'scatter', 
+        name: 'Probe 7'
+      };
 
+      var trace8 = {
+        x: x_array,
+        y: temperatures[7],
+        type: 'scatter', 
+        name: 'Probe 8'
+      };
 
+      var trace9 = {
+        x: x_array,
+        y: temperatures[8],
+        type: 'scatter', 
+        name: 'Probe 8'
+      };
 
-      // var trace1 = {
-      //   x: [1, 2, 3, 4],
-      //   y: [10, 15, 13, 17],
-      //   type: 'scatter'
-      // };
-
-      // var trace2 = {
-      //   x: [1, 2, 3, 4],
-      //   y: [16, 5, 11, 9],
-      //   type: 'scatter'
-      // };
+      var trace10 = {
+        x: x_array,
+        y: temperatures[9],
+        type: 'scatter', 
+        name: 'Probe 10'
+      };
       
 
+      var data = [ trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8, trace9, trace10 ];
 
 
+      var layout = {
+        title: graphName,
+        xaxis: {
+          title: 'Time'
+        },
+        yaxis: {
+          title: 'Temperature (F)'
+        }
+      };
 
-      var data = trace1;
-      // var data = trace2;
-      // var data = [ trace1, trace2 ];
-
-      Plotly.newPlot('myDiv', data, { responsive: true });
+      Plotly.newPlot('myDiv', data, layout, { responsive: true });
     }
   </script>
 </body>
