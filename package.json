@@ -31,7 +31,7 @@
   "author": "Sam Dale",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^7.1.10",
+    "electron": ">=7.2.4",
     "chai": "^3.4.1",
     "chai-as-promised": "^6.0.0",
     "check-for-leaks": "^1.2.0",
@@ -51,6 +51,7 @@
     "acorn": ">=7.1.1"
   },
   "dependencies": {
+    "electron": ">=7.2.4",
     "csv-parser": "^2.3.2",
     "electron": "^4.0.1",
     "electron-log": "^2.2.14",
